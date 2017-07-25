@@ -15,6 +15,12 @@ void ATankAIController::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("AI Controller begin play"));
 }
 
+void ATankAIController::Setup()
+{
+	FindAiController();
+	FindPlayer();
+}
+
 void ATankAIController::FindAiController()
 {
 	FString aiControl = GetControlledTank()->GetName();
@@ -27,4 +33,25 @@ void ATankAIController::FindAiController()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No AI Controller found"));
 	}
+}
+
+void ATankAIController::FindPlayer()
+{
+	ATank* playerTank = GetPlayerTank();
+	if (!playerTank)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AI Controller cannot find player tank"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AI Controller found player: %s"), *playerTank->GetName());
+	}
+}
+
+ATank* ATankAIController::GetPlayerTank()
+{
+	APawn* playerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
+
+	if (!playerPawn) { return nullptr; }
+	return Cast<ATank>(playerPawn);
 }

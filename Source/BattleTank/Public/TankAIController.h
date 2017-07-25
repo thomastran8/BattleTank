@@ -17,8 +17,10 @@ class BATTLETANK_API ATankAIController : public AAIController
 public:
 	ATank* GetControlledTank() const;
 	void BeginPlay() override;
+	void FindAiController();
+	void FindPlayer();
+	ATank* GetPlayerTank();
 
 	UFUNCTION(BlueprintCallable)
-	void FindAiController();
-	
+	void Setup();
 };
